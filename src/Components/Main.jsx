@@ -9,9 +9,9 @@ export const Main = () => {
     return (
         <div>
             <div className="flex flex-1 flex-col lg:pl-80 ">
-                <main className="relative">
+                <main className="relative e">
                     <Header />
-                    <div>
+                    <div  >
                         <div className="max-w-2xl mx-auto">
                             <div className="py-8">
                                 <div className="p-6 sm:p-10 flex items-center justify-center">
@@ -21,14 +21,10 @@ export const Main = () => {
                                     </div>
                                 </div>
 
-                                <div className="px-4 rounded-lg mb-4 mt-8">
-                                    <div
-                                        className="pl-12 relative response-block scroll-mt-32 min-h-[40px]"
-                                    >
+                                <div className="px-4 rounded-lg  mt-28">
+                                    <div className="pl-12 relative response-block scroll-mt-32 min-h-[40px]" >
                                         <div className="absolute top-0 left-0">
-                                            <div
-                                                className="w-9 h-9 bg-gray-200 rounded-md flex-none flex items-center justify-center text-gray-500"
-                                            >
+                                            <div className="w-9 h-9 bg-gray-200 hover:bg-gray-400 rounded-md flex-none flex items-center justify-center text-gray-500" >
                                                 <svg
                                                     stroke="currentColor"
                                                     fill="currentColor"
@@ -69,13 +65,13 @@ export const Main = () => {
                             <div className="my-4 text-center w-full space-x-2"></div>
                         </div>
 
-                        <Footer />
 
 
 
                     </div>
+                    <Footer />
                 </main>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
