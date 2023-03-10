@@ -1,19 +1,10 @@
 import React from 'react'
 import * as te from 'tw-elements';
 import { Features } from './Features'
-import { useState } from 'react';
-import { Button, Drawer } from 'antd';
+
 
 export const RightSidebar = () => {
-    const [open, setOpen] = useState(false);
 
-    const showDrawer = () => {
-        setOpen(true);
-    };
-
-    const onClose = () => {
-        setOpen(false);
-    };
 
     return (
 
