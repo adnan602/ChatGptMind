@@ -10,7 +10,7 @@ function App() {
     <div >
       <LeftSidebar />
       <Main />
-      <RightSidebar />
+
 
     </div>
   );

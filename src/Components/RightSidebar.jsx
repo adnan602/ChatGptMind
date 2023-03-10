@@ -1,7 +1,20 @@
 import React from 'react'
 import * as te from 'tw-elements';
 import { Features } from './Features'
+import { useState } from 'react';
+import { Button, Drawer } from 'antd';
+
 export const RightSidebar = () => {
+    const [open, setOpen] = useState(false);
+
+    const showDrawer = () => {
+        setOpen(true);
+    };
+
+    const onClose = () => {
+        setOpen(false);
+    };
+
     return (
 
         <div className="hidden lg:fixed lg:inset-y-0 lg:right-0 lg:flex lg:w-80 lg:flex-col shadow-left">
