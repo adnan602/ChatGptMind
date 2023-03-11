@@ -3,9 +3,11 @@ import { Header } from './Header'
 import { Features } from "./Features"
 import { ApiKeys } from './ApiKeys'
 import { Footer } from './Footer'
-
+import { useAppContext } from 'context/app.context'
+import { race } from 'q'
 
 export const Main = () => {
+    const { state, dispatch } = useAppContext()
     return (
         <div>
             <div className="flex flex-1 flex-col lg:pl-80 ">
@@ -16,8 +18,10 @@ export const Main = () => {
                             <div className="py-8">
                                 <div className="p-6 sm:p-10 flex items-center justify-center">
                                     <div>
+                                        {
+                                            state.api_key ? <Chat /> : <ApiKeys />
+                                        }
 
-                                        <ApiKeys />
                                     </div>
                                 </div>
 
@@ -73,5 +77,21 @@ export const Main = () => {
                 </main>
             </div >
         </div >
+    )
+}
+
+
+export const Chat = () => {
+    return (
+        <div>
+            <div class=" mt-10 ">
+                <div class="flex items-center justify-center">
+                    <div class="text-green-500 text-sm font-semibold my-2">Awesome! You can start chatting now!</div>
+                    <div class="confetti-explosion-container-0-2-108">
+
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }

@@ -1,65 +1,66 @@
-import React, { useEffect,useState } from "react";
-import {chatCompletion,titleCompletion} from "api/openai.api"
-import {useAppContext} from 'context/app.context'
+import React, { useEffect, useState } from "react";
+import { chatCompletion, titleCompletion } from "api/openai.api"
+import { useAppContext } from 'context/app.context'
 
 export const Footer = () => {
-   const {state,dispatch} = useAppContext()
-    const [prompt,setPrompt] = useState('')
-    const onSend = async()=>{
+    const { state, dispatch } = useAppContext()
+    const [prompt, setPrompt] = useState('')
+    const onSend = async () => {
         const promptMessageList = [
             {
-            role:"system",
-            content:state.initSystemPrompt
-         },
+                role: "system",
+                content: state.initSystemPrompt
+            },
             {
-            role:"user",
-            content:prompt
+                role: "user",
+                content: prompt
+            }
+        ]
+
+        const chatResponse = await chatCompletion({
+            "model": state.model,
+            "messages": promptMessageList
+
+        });
+
+        const titleResponse = await titleCompletion(
+            {
+                "model": "gpt-3.5-turbo",
+                "messages": [
+                    ...promptMessageList, { ...chatResponse.choices[0]?.message }, { role: "user", content: "What would be a short and relevant title for this chat? You must strictly answer with only the title, no other text is allowed." }
+                ]
+
+
+            })
+        const title = titleResponse.choices[0].message.content
+        const userChatList = state.userChatList || [];
+        const id = "d85b912f-111f-4db5-b557-559f615104d6"
+        const userChat = {
+            createdAt: new Date(),
+            id: id,
+            model: state.model,
+            preview: prompt,
+            systemMessage: state.initSystemPrompt,
+            title: title
         }
-    ]
+        userChatList.push(userChat);
+        const chat = {
+            "messages":
+                [...promptMessageList, {
+                    ...chatResponse.choices[0]?.message,
+                    usage: chatResponse.usage,
+                    finish: chatResponse.finish_reason
+                }],
+            chatTitle: title,
+            model: state.nodel,
+            systemMessage: state.initSystemPrompt,
+            chatID: id
+        }
 
-    const chatResponse = await chatCompletion({
-        "model":state.model,
-        "messages":promptMessageList
-        
-    });
-    
-    const  titleResponse = await titleCompletion(
-        {
-            "model":"gpt-3.5-turbo",
-            "messages":[
-              ...promptMessageList,{...chatResponse.choices[0]?.message},{role:"user",content:"What would be a short and relevant title for this chat? You must strictly answer with only the title, no other text is allowed."}
-            ]
-            
-        
-    })
-    const title = titleResponse.choices[0].message.content  
-    const userChatList = state.userChatList || [];
-    const id = "d85b912f-111f-4db5-b557-559f615104d6"
-    const userChat = {createdAt: new Date(),
-      id: id,
-      model: state.model,
-      preview: prompt,
-      systemMessage:state.initSystemPrompt,
-      title: title
-    }
-    userChatList.push(userChat);
-    const chat = {
-      "messages":
-      [...promptMessageList,{
-        ...chatResponse.choices[0]?.message,
-        usage:chatResponse.usage,
-        finish:chatResponse.finish_reason
-      }],
-      chatTitle:title,
-      model:state.nodel,
-      systemMessage:state.initSystemPrompt,
-      chatID:id
-    }
 
-    
-    window.localStorage.setItem("userChatHistory",JSON.stringify(userChatList))
-    window.localStorage.setItem(`CHAT_${id}`,JSON.stringify(chat))
-  }
+        window.localStorage.setItem("userChatHistory", JSON.stringify(userChatList))
+        window.localStorage.setItem(`CHAT_${id}`, JSON.stringify(chat))
+    }
     return (
         <div>
             <div className=" sticky bottom-0  left-0 right-0">
@@ -74,17 +75,17 @@ export const Footer = () => {
                                         </path>
                                     </svg></div>
                                 <textarea
-                                 onChange={(e)=>{
-                setPrompt(e.target.value)
-              }}
+                                    onChange={(e) => {
+                                        setPrompt(e.target.value)
+                                    }}
                                     id="chat-input-textbox"
                                     placeholder="Your message here..."
                                     className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:py-1.5 sm:text-sm sm:leading-6 min-h-[36px] max-h-[500px] resize-none"
                                     style={{ "height": "38px !important" }}
                                 ></textarea>
-                                <div 
-                                onClick={onSend}>
-                                class="w-9 h-9 bg-gray-300 rounded-md hover:bg-gray-400 flex-none flex items-center justify-center text-gray-500">
+                                <div
+                                    onClick={onSend}
+                                    class="w-9 h-9 bg-gray-300 rounded-md hover:bg-gray-400 flex-none flex items-center justify-center text-gray-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="600px" height="600px" viewBox="0 0 24 24" fill="none">
                                         <path d="M20 12L4 12M20 12L14 18M20 12L14 6" stroke="#9599ad" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>

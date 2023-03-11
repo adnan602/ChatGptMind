@@ -1,25 +1,40 @@
 import React from 'react'
 import { useState } from 'react';
+import { PoweroffOutlined } from '@ant-design/icons';
+import { Space } from 'antd';
 import { Button, Drawer } from 'antd';
-import {IsAPIKeyValid,} from "api/openai.api"
+import { IsAPIKeyValid, } from "api/openai.api"
+import types from "constants/type";
+import { useAppContext } from 'context/app.context';
 export const ApiKeys = () => {
+    const [isVisible, setIsVisible] = useState(false);
+    const [btndis, setBtndis] = useState(false);
     const [open, setOpen] = useState(false);
     const [apiKey, setAPIKey] = useState("");
-  
-  const onSave = async() => {
-    try {
-    window.localStorage.setItem("API_KEY",apiKey)
-    const isValid = await IsAPIKeyValid();
-    console.log(isValid)
-    if(!isValid){
-        window.localStorage.removeItem("API_KEY")
+    const { dispatch } = useAppContext();
+    const onSave = async () => {
+        setIsVisible(!isVisible);
+        setBtndis(true);
+        try {
+            window.localStorage.setItem("API_KEY", apiKey)
+            const isValid = await IsAPIKeyValid();
+            console.log(isValid)
+
+            if (!isValid) {
+
+                window.localStorage.removeItem("API_KEY")
+            }
+            else {
+                dispatch(types.SET_API_KEy, apiKey)
+            }
+        } catch (error) {
+            console.log(error)
+            window.localStorage.removeItem("API_KEY")
+        }
+
     }
-  } catch (error) {
-        console.log(error)
-        window.localStorage.removeItem("API_KEY")
-  }
-    
-  }
+
+
 
     const showDrawer = () => {
         setOpen(true);
@@ -65,19 +80,34 @@ export const ApiKeys = () => {
                                         <div class="my-4">
                                             <a class="text-blue-500 text-xs hover:underline" target="_blank" rel="noopener noreferrer" href="https://platform.openai.com/account/api-keys" tabindex="0">→ Get your API key from Open AI dashboard.</a></div>
                                         <div class="my-4">
-                                            <input type="text" 
-                                            onChange={(e)=>{setAPIKey(e.target.value)}}
-                                            placeholder="sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm dark:bg-zinc-700" autocomplete="off" 
-                                             fdprocessedid="yovm6b" />
+                                            <input type="text"
+                                                onChange={(e) => { setAPIKey(e.target.value) }}
+                                                placeholder="sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm dark:bg-zinc-700" autocomplete="off"
+                                                fdprocessedid="yovm6b" />
 
                                         </div>
+                                        <div class="text-sm text-center text-red-500">Invalid API key. Please make sure your API key is still working properly.</div>
                                         <div class="my-2 text-center space-x-2 flex items-center justify-center">
-                                            <button 
-                                            onClick={onSave}
-                                            class="inline-flex items-center bg-purple-600 px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  hover:bg-purple-700  space-x-1 disabled:bg-gray-400" fdprocessedid="1oi5f6">
-                                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" class="w-4 h-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                            <button disabled={btndis}
+
+                                                onClick={onSave}
+                                                class="inline-flex items-center bg-purple-600 px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  hover:bg-purple-700  space-x-1 disabled:bg-gray-400" fdprocessedid="1oi5f6">
+                                                {isVisible && (<svg
+
+                                                    class="  w-5 h-5 mr-3 -ml-1 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 24 24">
+                                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                    <path class="opacity-75" fill="currentColor"
+                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                                    </path>
+                                                </svg>
+                                                )}
+
+
+                                                {!isVisible && (<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" class="w-4 h-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M912 190h-69.9c-9.8 0-19.1 4.5-25.1 12.2L404.7 724.5 207 474a32 32 0 0 0-25.1-12.2H112c-6.7 0-10.4 7.7-6.3 12.9l273.9 347c12.8 16.2 37.4 16.2 50.3 0l488.4-618.9c4.1-5.1.4-12.8-6.3-12.8z">
-                                                    </path></svg>
+                                                    </path></svg>)}
+
                                                 <span>Save</span></button>
                                             <button onClick={onClose} class="inline-flex items-center px-4 py-2 text-sm  border font-medium rounded-md shadow-sm text-gray-500   space-x-1" fdprocessedid="8w0icl"><span>
                                                 Cancel</span></button>
@@ -98,7 +128,7 @@ export const ApiKeys = () => {
                         >
                     </div> */}
                 </div>
-            </div>
+            </div >
         </div >
     )
 }
