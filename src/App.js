@@ -10,8 +10,10 @@ function App() {
     <AppProvider>
       <LeftSidebar />
       <Main />
-      <RightSidebar />
+
     </AppProvider>
+
+
   );
 }
 

@@ -38,6 +38,7 @@ const onError = function (error) {
     errMsg: !error?.response
       ? "Network Issue!"
       : error?.response?.data?.message ||
+      error?.response?.data?.error?.message ||
         error?.response?.data?.errors[0].param +
           " " +
           error?.response?.data?.errors[0].msg,

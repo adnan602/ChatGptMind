@@ -2,6 +2,7 @@ import React, { useEffect,useState } from "react";
 import {chatCompletion,titleCompletion} from "api/openai.api"
 import {useAppContext} from 'context/app.context'
 export const Footer = () => {
+
     const {state,dispatch} = useAppContext()
     const [prompt,setPrompt] = useState('')
     const onSend = async()=>{
@@ -16,23 +17,49 @@ export const Footer = () => {
         }
     ]
 
-        const chatResponse = await chatCompletion({
-            "model":"gpt-3.5-turbo",
-            "messages":promptMessageList
-            
-        });
-        const assistantMessage = {...chatResponse.choices[0]?.message}
-        promptMessageList.push(assistantMessage,{role:"user",content:"What would be a short and relevant title for this chat? You must strictly answer with only the title, no other text is allowed."});
-        const  titleResponse = await titleCompletion(
-            {
-                "model":"gpt-3.5-turbo",
-                "messages":promptMessageList
-                
-            
-        })
-        const title = titleResponse.choices[0].message.content
+    const chatResponse = await chatCompletion({
+        "model":state.model,
+        "messages":promptMessageList
         
+    });
+    
+    const  titleResponse = await titleCompletion(
+        {
+            "model":"gpt-3.5-turbo",
+            "messages":[
+              ...promptMessageList,{...chatResponse.choices[0]?.message},{role:"user",content:"What would be a short and relevant title for this chat? You must strictly answer with only the title, no other text is allowed."}
+            ]
+            
+        
+    })
+    const title = titleResponse.choices[0].message.content  
+    const userChatList = state.userChatList || [];
+    const id = "d85b912f-111f-4db5-b557-559f615104d6"
+    const userChat = {createdAt: new Date(),
+      id: id,
+      model: state.model,
+      preview: prompt,
+      systemMessage:state.initSystemPrompt,
+      title: title
     }
+    userChatList.push(userChat);
+    const chat = {
+      "messages":
+      [...promptMessageList,{
+        ...chatResponse.choices[0]?.message,
+        usage:chatResponse.usage,
+        finish:chatResponse.finish_reason
+      }],
+      chatTitle:title,
+      model:state.nodel,
+      systemMessage:state.initSystemPrompt,
+      chatID:id
+    }
+
+    
+    window.localStorage.setItem("userChatHistory",JSON.stringify(userChatList))
+    window.localStorage.setItem(`CHAT_${id}`,JSON.stringify(chat))
+  }
     
   return (
     <div className="sticky bottom-0 left-0 right-0">

@@ -4,7 +4,10 @@ export const AppContext = React.createContext();
 
 export function AppProvider({ children }) {
   const [state, setState] = React.useState({
-    initSystemPrompt:"You are ChatGPT, a large language model trained by OpenAI."
+    initSystemPrompt:
+      "You are ChatGPT, a large language model trained by OpenAI.",
+    model: "gpt-3.5-turbo",
+    
   });
 
   const dispatch = (actionType, payload) => {
