@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { chatCompletion, titleCompletion } from "api/openai.api"
 import { useAppContext } from 'context/app.context'
-
-export const Footer = () => {
+import types from "constants/type";
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import rehypehighlight from 'rehype-highlight'
+import showdown from 'showdown'
+const Converter = new showdown.Converter()
+export const ChatInput = () => {
     const { state, dispatch } = useAppContext()
     const [prompt, setPrompt] = useState('')
+    const [text,setText] = useState('')
     const onSend = async () => {
         const promptMessageList = [
             {
@@ -22,7 +28,7 @@ export const Footer = () => {
             "messages": promptMessageList
 
         });
-
+        setText(chatResponse.choices[0]?.message.content)
         const titleResponse = await titleCompletion(
             {
                 "model": "gpt-3.5-turbo",
@@ -32,8 +38,9 @@ export const Footer = () => {
 
 
             })
-        const title = titleResponse.choices[0].message.content
-        const userChatList = state.userChatList || [];
+        
+            const title = titleResponse.choices[0].message.content
+        const userChatList = state.chatList || [];
         const id = "d85b912f-111f-4db5-b557-559f615104d6"
         const userChat = {
             createdAt: new Date(),
@@ -43,7 +50,7 @@ export const Footer = () => {
             systemMessage: state.initSystemPrompt,
             title: title
         }
-        userChatList.push(userChat);
+        userChatList.unshift(userChat);
         const chat = {
             "messages":
                 [...promptMessageList, {
@@ -59,14 +66,19 @@ export const Footer = () => {
 
 
         window.localStorage.setItem("userChatHistory", JSON.stringify(userChatList))
+        dispatch(types.SET_CHAT_LIST,userChatList)
         window.localStorage.setItem(`CHAT_${id}`, JSON.stringify(chat))
     }
     return (
         <div>
+            
+            {
+               Converter.makeHtml(text)
+            }
             <div className=" sticky bottom-0  left-0 right-0">
                 <div className="max-w-2xl mx-auto w-full">
                     <hr />
-                    <div className="p-4 bg-white px-4">
+                    <div className="p-4 bg-white px-0">
                         <div className="pb-safe">
                             <div className="flex items-center justify-center space-x-2 mb-2">
                                 <div class="w-9 h-9 bg-gray-300 hover:bg-gray-400 rounded-md flex-none flex items-center justify-center text-gray-500">
@@ -80,17 +92,18 @@ export const Footer = () => {
                                     }}
                                     id="chat-input-textbox"
                                     placeholder="Your message here..."
-                                    className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:py-1.5 sm:text-sm sm:leading-6 min-h-[36px] max-h-[500px] resize-none"
-                                    style={{ "height": "38px !important" }}
+                                    className="block w-full rounded-md border-0 text-gray-900 
+                                    shadow-sm ring-1 ring-inset ring-gray-300 
+                                    placeholder:text-gray-400 focus:ring-2 focus:ring-inset 
+                                    focus:ring-blue-600 sm:py-1.5 sm:text-sm sm:leading-6 min-h-[36px] max-h-[500px] resize-none" style={{ "height": "36px !important" }}
                                 ></textarea>
-                                <div
-                                    onClick={onSend}
-                                    class="w-9 h-9 bg-gray-300 rounded-md hover:bg-gray-400 flex-none flex items-center justify-center text-gray-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="600px" height="600px" viewBox="0 0 24 24" fill="none">
-                                        <path d="M20 12L4 12M20 12L14 18M20 12L14 6" stroke="#9599ad" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
-
-                                </div>
+                                <button onClick={onSend} type="button" class="inline-flex items-center
+                                 px-4 border border-transparent text-sm font-medium 
+                                 rounded-md shadow-sm text-white bg-purple-600 
+                                 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 
+                                 focus:ring-purple-500 disabled:bg-gray-400 disabled:cursor-default
+                                  transition-colors whitespace-nowrap space-x-1 h-[36px]">→</button>
+                                
                             </div>
 
                         </div>

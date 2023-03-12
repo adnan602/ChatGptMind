@@ -7,14 +7,13 @@ import { IsAPIKeyValid, } from "api/openai.api"
 import types from "constants/type";
 import { useAppContext } from 'context/app.context';
 export const ApiKeys = () => {
-    const [isVisible, setIsVisible] = useState(false);
-    const [btndis, setBtndis] = useState(false);
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [keyError,setKeyError]=useState(false)
     const [open, setOpen] = useState(false);
     const [apiKey, setAPIKey] = useState("");
     const { dispatch } = useAppContext();
     const onSave = async () => {
-        setIsVisible(!isVisible);
-        setBtndis(true);
+        setIsProcessing(true);
         try {
             window.localStorage.setItem("API_KEY", apiKey)
             const isValid = await IsAPIKeyValid();
@@ -23,13 +22,18 @@ export const ApiKeys = () => {
             if (!isValid) {
 
                 window.localStorage.removeItem("API_KEY")
+                setKeyError(true);
             }
             else {
-                dispatch(types.SET_API_KEy, apiKey)
+                dispatch(types.SET_API_KEY, apiKey)
             }
         } catch (error) {
+            setKeyError(true);
             console.log(error)
             window.localStorage.removeItem("API_KEY")
+        }
+        finally{
+            setIsProcessing(false);
         }
 
     }
@@ -86,13 +90,14 @@ export const ApiKeys = () => {
                                                 fdprocessedid="yovm6b" />
 
                                         </div>
-                                        <div class="text-sm text-center text-red-500">Invalid API key. Please make sure your API key is still working properly.</div>
-                                        <div class="my-2 text-center space-x-2 flex items-center justify-center">
-                                            <button disabled={btndis}
+                                        {keyError ?  <div class="text-sm text-center text-red-500">Invalid API key. Please make sure your API key is still working properly.</div>
+                                         : ""}
+                                       <div class="my-2 text-center space-x-2 flex items-center justify-center">
+                                            <button disabled={isProcessing}
 
                                                 onClick={onSave}
                                                 class="inline-flex items-center bg-purple-600 px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white  hover:bg-purple-700  space-x-1 disabled:bg-gray-400" fdprocessedid="1oi5f6">
-                                                {isVisible && (<svg
+                                                {isProcessing && (<svg
 
                                                     class="  w-5 h-5 mr-3 -ml-1 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none"
                                                     viewBox="0 0 24 24">
@@ -104,7 +109,7 @@ export const ApiKeys = () => {
                                                 )}
 
 
-                                                {!isVisible && (<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" class="w-4 h-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                {!isProcessing && (<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" class="w-4 h-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M912 190h-69.9c-9.8 0-19.1 4.5-25.1 12.2L404.7 724.5 207 474a32 32 0 0 0-25.1-12.2H112c-6.7 0-10.4 7.7-6.3 12.9l273.9 347c12.8 16.2 37.4 16.2 50.3 0l488.4-618.9c4.1-5.1.4-12.8-6.3-12.8z">
                                                     </path></svg>)}
 
