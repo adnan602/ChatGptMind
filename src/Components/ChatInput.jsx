@@ -140,7 +140,7 @@ export const ChatInput = () => {
                   class="block w-full rounded-md border-0 text-gray-900 pl-3
                   shadow-sm ring-1 ring-inset ring-gray-300 
                   placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:outline-none
-                  focus:ring-blue-600  sm:py-1.5 sm:text-sm sm:leading-6 min-h-[36px] 
+                  focus:ring-purple-600  sm:py-1.5 sm:text-sm sm:leading-6 min-h-[36px] 
                   max-h-[500px]  "
 
 
@@ -149,7 +149,7 @@ export const ChatInput = () => {
                   ref={sendBtnRef}
                   onClick={onSend}
                   type="button"
-                  class="inline-flex items-center
+                  class="inline-flex items-center disable
                                  px-4 border border-transparent text-sm font-medium 
                                  rounded-md shadow-sm text-white bg-purple-600 
                                  hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 

@@ -3,15 +3,8 @@ import React from 'react'
 export const Features = () => {
     return (
         <div>
-            <div className="flex items-center justify-center space-x-2 ">
 
-                <div className="font-semibold text-4xl sm:text-5xl">
-                    Chat<span className="text-blue-500">WithAl</span>
-                </div>
-                <span className="bg-gradient-to-r from-purple-400 to-pink-500 px-3 py-1 text-xs font-semibold text-white text-center rounded-full inline-block"
-                >Beta</span >
-            </div>
-            <div className="text-center my-4 font-light text-base sm:text-xl my-4 sm:my-10">
+            <div className="text-center mb-4 font-light text-base sm:text-xl  ">
                 A better UI for ChatGPT
             </div>
             <div className="flex items-center justify-start pl-5">
