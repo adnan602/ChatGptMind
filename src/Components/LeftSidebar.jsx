@@ -4,9 +4,9 @@ import types from "constants/type";
 export const LeftSidebar = () => {
   const { state, dispatch } = useAppContext();
   const onDeleteChat = (index) => {
-    debugger;
-    const chat_id = state.chatList[index].chatID;
-    const chats = state.chatList.splice(index, 1);
+    const chats = state.chatList;
+    const chat_id = chats[index].id;
+    chats.splice(index, 1);
     dispatch(types.SET_CHAT_LIST, chats);
     window.localStorage.setItem("userChatHistory", JSON.stringify(chats));
     window.localStorage.removeItem(`CHAT_${chat_id}`);
