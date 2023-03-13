@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { chatCompletion, titleCompletion } from "api/openai.api";
 import { useAppContext } from "context/app.context";
 import types from "constants/type";
@@ -6,8 +6,17 @@ import { v4 as uuidv4 } from "uuid";
 export const ChatInput = () => {
   const { state, dispatch } = useAppContext();
   const [prompt, setPrompt] = useState("");
-
+  const sendBtnRef = useRef();
+  const inputRef = useRef();
+  const handleKeypress = (e) => {
+    if (e.keyCode === 13 && prompt.length != 0) {
+      sendBtnRef.current.click();
+      // inputRef.current.blur();
+    }
+  };
   const onSend = async () => {
+    if (prompt.length == 0) return;
+    inputRef.current.value = "";
     dispatch(types.SET_ACTIVE_CHAT_MESSAGE, { role: "user", content: prompt });
     dispatch(types.SET_THINKING, true);
     const promptMessageList = [
@@ -112,6 +121,8 @@ export const ChatInput = () => {
                   onChange={(e) => {
                     setPrompt(e.target.value);
                   }}
+                  ref={inputRef}
+                  onKeyDown={handleKeypress}
                   id="chat-input-textbox"
                   placeholder="Your message here..."
                   className="block w-full rounded-md border-0 text-gray-900 
@@ -121,6 +132,7 @@ export const ChatInput = () => {
                   style={{ height: "36px !important" }}
                 ></textarea>
                 <button
+                  ref={sendBtnRef}
                   onClick={onSend}
                   type="button"
                   class="inline-flex items-center
