@@ -4,16 +4,27 @@ import { useAppContext } from "context/app.context";
 import types from "constants/type";
 import { v4 as uuidv4 } from "uuid";
 export const ChatInput = () => {
+  let height = 38;
   const { state, dispatch } = useAppContext();
   const [prompt, setPrompt] = useState("");
   const sendBtnRef = useRef();
   const inputRef = useRef();
   const handleKeypress = (e) => {
-    if (e.keyCode === 13 && prompt.length != 0) {
+
+    if (e.keyCode === 13 && prompt.length != 0 && !e.shiftKey) {
       sendBtnRef.current.click();
       // inputRef.current.blur();
     }
+    if (e.keyCode === 13 && e.shiftKey) {
+      height = height + 22
+      e.currentTarget.style.height = height + 'px !important'
+    }
   };
+  useEffect(() => {
+    if (inputRef) {
+      inputRef.current.style.height = height + 'px !important'
+    }
+  }, [inputRef])
   const onSend = async () => {
     if (prompt.length == 0) return;
     inputRef.current.value = "";
@@ -118,6 +129,7 @@ export const ChatInput = () => {
                   </svg>
                 </div>
                 <textarea
+                  height="38px"
                   onChange={(e) => {
                     setPrompt(e.target.value);
                   }}
@@ -125,11 +137,13 @@ export const ChatInput = () => {
                   onKeyDown={handleKeypress}
                   id="chat-input-textbox"
                   placeholder="Your message here..."
-                  className="block w-full rounded-md border-0 text-gray-900 
-                                    shadow-sm ring-1 ring-inset ring-gray-300 
-                                    placeholder:text-gray-400 focus:ring-2 focus:ring-inset 
-                                    focus:ring-blue-600 sm:py-1.5 sm:text-sm sm:leading-6 min-h-[36px] max-h-[500px] resize-none"
-                  style={{ height: "36px !important" }}
+                  class="block w-full rounded-md border-0 text-gray-900 pl-3
+                  shadow-sm ring-1 ring-inset ring-gray-300 
+                  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:outline-none
+                  focus:ring-blue-600  sm:py-1.5 sm:text-sm sm:leading-6 min-h-[36px] 
+                  max-h-[500px]  "
+
+
                 ></textarea>
                 <button
                   ref={sendBtnRef}
