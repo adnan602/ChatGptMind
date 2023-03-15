@@ -49,7 +49,7 @@ export const Chat = () => {
   };
   return (
     <div>
-      <div className="flex flex-1 flex-col lg:pl-80 ">
+      <div className="flex flex-1 flex-col lg:pl-80 chat ">
         <main className="relative e">
           <Header />
           <div>

@@ -3,7 +3,10 @@ import { useAppContext } from "context/app.context";
 import { Drawer } from "antd";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Features } from './Features'
+import { LeftSidebar } from "./LeftSidebar";
+import { LeftSidebarSm } from "./LeftSidebarSm ";
 export const Header = () => {
+
   const [open, setOpen] = useState(false);
   const { state, dispatch } = useAppContext();
 
@@ -16,12 +19,19 @@ export const Header = () => {
   };
   return (
     <>
-      <div className="sticky top-0 z-10 bg-white backdrop-blur">
+      <div className="sticky top-0 z-10 bg-white backdrop-blur header">
         <div className="flex lg:hidden absolute left-1 top-0 bottom-0 items-center justify-center">
           <button
+
             type="button"
-            className="inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+            data-te-offcanvas-toggle
+            data-te-target="#offcanvasExample"
+            aria-controls="offcanvasExample"
+            data-te-ripple-init
+            data-te-ripple-color="light"
+            className=" inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
             fdprocessedid="93pvp"
+
           >
             <span className="sr-only">Open sidebar</span>
             <svg
@@ -38,6 +48,37 @@ export const Header = () => {
               ></path>
             </svg>
           </button>
+          <div
+            class="invisible fixed bottom-0 top-0 left-0 z-[1045] flex w-76 max-w-full -translate-x-full flex-col border-none bg-white bg-clip-padding text-neutral-700 shadow-sm outline-none transition duration-300 ease-in-out dark:bg-neutral-800 dark:text-neutral-200 [&[data-te-offcanvas-show]]:transform-none"
+            tabindex="-1"
+            id="offcanvasExample"
+            aria-labelledby="offcanvasExampleLabel"
+            data-te-offcanvas-init>
+            <div class="flex items-center justify-between">
+              {/* <button
+                type="button"
+                class="hiddens box-content rounded-none border-none opacity-50 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+                data-te-offcanvas-dismiss>
+                <span
+                  class="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="h-6 w-6">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </span>
+              </button> */}
+              <LeftSidebarSm />
+            </div>
+          </div>
+
         </div>
         <div class="absolute right-2 top-0 bottom-0 flex items-center justify-center">
           <button

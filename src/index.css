@@ -22,3 +22,6 @@ code {
 .shadow-left {
 	box-shadow: 0 1px 6px -0px rgb(0 0 0 / 20%);
 }
+
+@media screen and (min-width: 368px) {
+}
