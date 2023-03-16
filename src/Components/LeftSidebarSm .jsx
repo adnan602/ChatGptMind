@@ -14,7 +14,7 @@ export const LeftSidebarSm = () => {
   };
   return (
     <div className=" bottom-0  containerr">
-      <div className="jsx-7078ffb922cb3c38 flex min-h-0 flex-1 flex-col bg-gray-800">
+      <div className="jsx-7078ffb922cb3c38 flex min-h-screen flex-1 flex-col bg-gray-800">
         <div
           id="navbar"
           className="jsx-7078ffb922cb3c38 flex  flex-1 flex-col overflow-y-auto pt-5 pb-4">
