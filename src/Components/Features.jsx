@@ -4,7 +4,7 @@ export const Features = () => {
     return (
         <div>
 
-            <div className="text-center mb-4 font-light text-base sm:text-xl  ">
+            <div className="text-center mb-4 font-light text-base sm:text-xl w-72 ">
                 A better UI for ChatGPT
             </div>
             <div className="flex items-center justify-start pl-5">

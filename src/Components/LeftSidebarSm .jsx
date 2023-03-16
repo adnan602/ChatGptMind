@@ -17,14 +17,34 @@ export const LeftSidebarSm = () => {
       <div className="jsx-7078ffb922cb3c38 flex min-h-screen flex-1 flex-col bg-gray-800">
         <div
           id="navbar"
-          className="jsx-7078ffb922cb3c38 flex  flex-1 flex-col overflow-y-auto pt-5 pb-4">
+          className="jsx-7078ffb922cb3c38 flex  flex-1 flex-col overflow-y-auto pt-2 pb-4">
           <div className="jsx-7078ffb922cb3c38 flex items-center justify-between">
             <div className="jsx-7078ffb922cb3c38 flex flex-shrink-0 items-center px-4">
               <img
                 src="/favicon-192x192.png"
-                className="jsx-7078ffb922cb3c38 h-8 w-auto"
+                className="jsx-7078ffb922cb3c38  w-auto"
               />
             </div>
+            <button
+              type="button"
+              class="box-content px-2 rounded-none border-none opacity-50 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+              data-te-offcanvas-dismiss>
+              <span
+                class="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="text-gray-300 h-6 w-6">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </span>
+            </button>
           </div>
           <nav className="jsx-7078ffb922cb3c38 mt-5 flex-1 space-y-2 px-2">
             <button

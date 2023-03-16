@@ -5,6 +5,7 @@ import types from "constants/type";
 import { v4 as uuidv4 } from "uuid";
 export const ChatInput = () => {
   let height = 38;
+
   const { state, dispatch } = useAppContext();
   const [prompt, setPrompt] = useState("");
   const sendBtnRef = useRef();
@@ -110,7 +111,7 @@ export const ChatInput = () => {
           <hr />
           <div className="p-4 bg-white px-0">
             <div className="pb-safe">
-              <div className="flex items-center justify-center space-x-2 mb-2">
+              <div className="flex items-center px-2 justify-center space-x-2 mb-2">
                 <div class="w-9 h-9 bg-gray-300 hover:bg-gray-400 rounded-md flex-none flex items-center justify-center text-gray-500">
                   <svg
                     stroke="currentColor"

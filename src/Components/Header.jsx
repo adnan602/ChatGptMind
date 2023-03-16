@@ -22,7 +22,6 @@ export const Header = () => {
       <div className="sticky top-0 z-10 bg-white backdrop-blur header">
         <div className="flex lg:hidden absolute left-1 top-0 bottom-0 items-center justify-center">
           <button
-
             type="button"
             data-te-offcanvas-toggle
             data-te-target="#offcanvasExample"
@@ -30,22 +29,20 @@ export const Header = () => {
             data-te-ripple-init
             data-te-ripple-color="light"
             className=" inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
-            fdprocessedid="93pvp"
+            fdprocessedid="93pvp" >
 
-          >
             <span className="sr-only">Open sidebar</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              className="h-6 w-6"
-            >
+              className="h-6 w-6">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-              ></path>
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5">
+              </path>
             </svg>
           </button>
           <div
@@ -55,26 +52,6 @@ export const Header = () => {
             aria-labelledby="offcanvasExampleLabel"
             data-te-offcanvas-init>
             <div class="flex items-center justify-between">
-              {/* <button
-                type="button"
-                class="hiddens box-content rounded-none border-none opacity-50 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
-                data-te-offcanvas-dismiss>
-                <span
-                  class="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="h-6 w-6">
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </span>
-              </button> */}
               <LeftSidebarSm />
             </div>
           </div>
@@ -97,6 +74,7 @@ export const Header = () => {
             placement="right"
             onClose={onClose}
             open={open}
+            class="w-72"
           >
             <Features />
           </Drawer>
